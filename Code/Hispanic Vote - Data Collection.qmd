@@ -1,0 +1,1053 @@
+```{r}
+
+library(tidycensus)
+library(tidyverse)
+library(janitor)
+library(sf)
+
+library(cvap)
+library(cpsvote)
+
+
+setwd("~/Documents/Indy/Hispanic Voting Demographics")
+
+getwd()
+
+```
+
+
+Statewide
+
+```{r}
+
+#Below, I am going to import annual data from the Census' Citizen Voting Age Population Data since its inception in 2009. This block will focus on the percentage of voting-age Hispanics across Nevada.
+
+cvap_2022 <- cvap_get("NV", year = 2022) %>% 
+  mutate(total_hisp = sum(cvap_hisp)) %>% 
+  mutate(total_pop = sum(cvap)) %>% 
+  mutate(pct_hispanic = total_hisp/total_pop) %>% 
+  select(total_hisp, total_pop, pct_hispanic) %>% 
+  mutate("year" = "2022") %>% 
+  distinct()
+
+cvap_2021 <- cvap_get("NV", year = 2021) %>% 
+  mutate(total_hisp = sum(cvap_hisp)) %>% 
+  mutate(total_pop = sum(cvap)) %>% 
+  mutate(pct_hispanic = total_hisp/total_pop) %>% 
+  select(total_hisp, total_pop, pct_hispanic) %>% 
+  mutate("year" = "2021") %>% 
+  distinct()
+
+cvap_2020 <- cvap_get("NV", year = 2020) %>% 
+  mutate(total_hisp = sum(cvap_hisp)) %>% 
+  mutate(total_pop = sum(cvap)) %>% 
+  mutate(pct_hispanic = total_hisp/total_pop) %>% 
+  select(total_hisp, total_pop, pct_hispanic) %>% 
+  mutate("year" = "2020") %>% 
+  distinct()
+
+cvap_2019 <- cvap_get("NV", year = 2019) %>% 
+  mutate(total_hisp = sum(cvap_hisp)) %>% 
+  mutate(total_pop = sum(cvap)) %>% 
+  mutate(pct_hispanic = total_hisp/total_pop) %>% 
+  select(total_hisp, total_pop, pct_hispanic) %>% 
+  mutate("year" = "2019") %>% 
+  distinct()
+
+cvap_2018 <- cvap_get("NV", year = 2018) %>% 
+  mutate(total_hisp = sum(cvap_hisp)) %>% 
+  mutate(total_pop = sum(cvap)) %>% 
+  mutate(pct_hispanic = total_hisp/total_pop) %>% 
+  select(total_hisp, total_pop, pct_hispanic) %>% 
+  mutate("year" = "2018") %>% 
+  distinct()
+
+cvap_2017 <- cvap_get("NV", year = 2017) %>% 
+  mutate(total_hisp = sum(cvap_hisp)) %>% 
+  mutate(total_pop = sum(cvap)) %>% 
+  mutate(pct_hispanic = total_hisp/total_pop) %>% 
+  select(total_hisp, total_pop, pct_hispanic) %>% 
+  mutate("year" = "2017") %>% 
+  distinct()
+
+cvap_2016 <- cvap_get("NV", year = 2016) %>% 
+  mutate(total_hisp = sum(cvap_hisp)) %>% 
+  mutate(total_pop = sum(cvap)) %>% 
+  mutate(pct_hispanic = total_hisp/total_pop) %>% 
+  select(total_hisp, total_pop, pct_hispanic) %>% 
+  mutate("year" = "2016") %>% 
+  distinct()
+
+cvap_2015 <- cvap_get("NV", year = 2015) %>% 
+  mutate(total_hisp = sum(cvap_hisp)) %>% 
+  mutate(total_pop = sum(cvap)) %>% 
+  mutate(pct_hispanic = total_hisp/total_pop) %>% 
+  select(total_hisp, total_pop, pct_hispanic) %>% 
+  mutate("year" = "2015") %>% 
+  distinct()
+
+cvap_2014 <- cvap_get("NV", year = 2014) %>% 
+  mutate(total_hisp = sum(cvap_hisp)) %>% 
+  mutate(total_pop = sum(cvap)) %>% 
+  mutate(pct_hispanic = total_hisp/total_pop) %>% 
+  select(total_hisp, total_pop, pct_hispanic) %>% 
+  mutate("year" = "2014") %>% 
+  distinct()
+
+cvap_2013 <- cvap_get("NV", year = 2013) %>% 
+  mutate(total_hisp = sum(cvap_hisp)) %>% 
+  mutate(total_pop = sum(cvap)) %>% 
+  mutate(pct_hispanic = total_hisp/total_pop) %>% 
+  select(total_hisp, total_pop, pct_hispanic) %>% 
+  mutate("year" = "2013") %>% 
+  distinct()
+
+cvap_2012 <- cvap_get("NV", year = 2012) %>% 
+  mutate(total_hisp = sum(cvap_hisp)) %>% 
+  mutate(total_pop = sum(cvap)) %>% 
+  mutate(pct_hispanic = total_hisp/total_pop) %>% 
+  select(total_hisp, total_pop, pct_hispanic) %>% 
+  mutate("year" = "2012") %>% 
+  distinct()
+
+cvap_2011 <- cvap_get("NV", year = 2011) %>% 
+  mutate(total_hisp = sum(cvap_hisp)) %>% 
+  mutate(total_pop = sum(cvap)) %>% 
+  mutate(pct_hispanic = total_hisp/total_pop) %>% 
+  select(total_hisp, total_pop, pct_hispanic) %>% 
+  mutate("year" = "2011") %>% 
+  distinct()
+
+cvap_2010 <- cvap_get("NV", year = 2010) %>% 
+  mutate(total_hisp = sum(cvap_hisp)) %>% 
+  mutate(total_pop = sum(cvap)) %>% 
+  mutate(pct_hispanic = total_hisp/total_pop) %>% 
+  select(total_hisp, total_pop, pct_hispanic) %>% 
+  mutate("year" = "2010") %>% 
+  distinct()
+
+cvap_2009 <- cvap_get("NV", year = 2009) %>% 
+  mutate(total_hisp = sum(cvap_hisp)) %>% 
+  mutate(total_pop = sum(cvap)) %>% 
+  mutate(pct_hispanic = total_hisp/total_pop) %>% 
+  select(total_hisp, total_pop, pct_hispanic) %>% 
+  mutate("year" = "2009") %>% 
+  distinct()
+
+hispanic_population_2009_2022_statewide_nv <- rbind(cvap_2009, cvap_2010, cvap_2011, cvap_2012, cvap_2013, cvap_2014, cvap_2015, cvap_2016, cvap_2017, cvap_2018, cvap_2019, cvap_2020, cvap_2021, cvap_2022)
+
+hispanic_population_2009_2022_statewide_nv <- hispanic_population_2009_2022_statewide_nv %>% 
+  rename("pct_hispanic_statewide" = "pct_hispanic")
+  
+
+write_csv(hispanic_population_2009_2022_statewide_nv, "~/Documents/Indy/Hispanic Voting Demographics New Datasets/hispanic_population_2009_2022_statewide_nv.csv")
+
+```
+
+CLARK COUNTY
+
+```{r}
+
+# This block will focus on the percentage of voting-age Hispanics across Clark County
+
+cvap_clark_2022 <- cvap_get("NV", year = 2022, geography = "county") %>% 
+  clean_names() %>% 
+  filter(geoid == 32003) %>% 
+  mutate(total_hisp = sum(cvap_hisp)) %>% 
+  mutate(total_pop = sum(cvap)) %>% 
+  mutate(pct_hispanic = total_hisp/total_pop) %>% 
+  select(total_hisp, total_pop, pct_hispanic) %>% 
+  mutate("year" = "2022") %>% 
+  distinct()
+
+cvap_clark_2021 <- cvap_get("NV", year = 2021, geography = "county") %>%    clean_names() %>%    filter(geoid == 32003) %>% 
+  mutate(total_hisp = sum(cvap_hisp)) %>% 
+  mutate(total_pop = sum(cvap)) %>% 
+  mutate(pct_hispanic = total_hisp/total_pop) %>% 
+  select(total_hisp, total_pop, pct_hispanic) %>% 
+  mutate("year" = "2021") %>% 
+  distinct()
+
+cvap_clark_2020 <- cvap_get("NV", year = 2020, geography = "county") %>%  
+  clean_names() %>%   
+  filter(geoid == 32003) %>% 
+  mutate(total_hisp = sum(cvap_hisp)) %>% 
+  mutate(total_pop = sum(cvap)) %>% 
+  mutate(pct_hispanic = total_hisp/total_pop) %>% 
+  select(total_hisp, total_pop, pct_hispanic) %>% 
+  mutate("year" = "2020") %>% 
+  distinct()
+
+cvap_clark_2019 <- cvap_get("NV", year = 2019, geography = "county") %>%  
+  clean_names() %>%    
+  filter(geoid == 32003) %>% 
+  mutate(total_hisp = sum(cvap_hisp)) %>% 
+  mutate(total_pop = sum(cvap)) %>% 
+  mutate(pct_hispanic = total_hisp/total_pop) %>% 
+  select(total_hisp, total_pop, pct_hispanic) %>% 
+  mutate("year" = "2019") %>% 
+  distinct()
+
+cvap_clark_2018 <- cvap_get("NV", year = 2018, geography = "county") %>%  
+  clean_names() %>%    
+  filter(geoid == 32003) %>%  
+  mutate(total_hisp = sum(cvap_hisp)) %>% 
+  mutate(total_pop = sum(cvap)) %>% 
+  mutate(pct_hispanic = total_hisp/total_pop) %>% 
+  select(total_hisp, total_pop, pct_hispanic) %>% 
+  mutate("year" = "2018") %>% 
+  distinct()
+
+cvap_clark_2017 <- cvap_get("NV", year = 2017, geography = "county") %>%  
+  clean_names() %>%    
+  filter(geoid == 32003) %>% 
+  mutate(total_hisp = sum(cvap_hisp)) %>% 
+  mutate(total_pop = sum(cvap)) %>% 
+  mutate(pct_hispanic = total_hisp/total_pop) %>% 
+  select(total_hisp, total_pop, pct_hispanic) %>% 
+  mutate("year" = "2017") %>% 
+  distinct()
+
+cvap_clark_2016 <- cvap_get("NV", year = 2016, geography = "county") %>%  
+  clean_names() %>%    
+  filter(geoid == 32003) %>% 
+  mutate(total_hisp = sum(cvap_hisp)) %>% 
+  mutate(total_pop = sum(cvap)) %>% 
+  mutate(pct_hispanic = total_hisp/total_pop) %>% 
+  select(total_hisp, total_pop, pct_hispanic) %>% 
+  mutate("year" = "2016") %>% 
+  distinct()
+
+cvap_clark_2015 <- cvap_get("NV", year = 2015, geography = "county") %>%  
+  clean_names() %>%    
+  filter(geoid == 32003) %>% 
+  mutate(total_hisp = sum(cvap_hisp)) %>% 
+  mutate(total_pop = sum(cvap)) %>% 
+  mutate(pct_hispanic = total_hisp/total_pop) %>% 
+  select(total_hisp, total_pop, pct_hispanic) %>% 
+  mutate("year" = "2015") %>% 
+  distinct()
+
+cvap_clark_2014 <- cvap_get("NV", year = 2014, geography = "county") %>%  
+  clean_names() %>%    
+  filter(geoid == 32003) %>% 
+  mutate(total_hisp = sum(cvap_hisp)) %>% 
+  mutate(total_pop = sum(cvap)) %>% 
+  mutate(pct_hispanic = total_hisp/total_pop) %>% 
+  select(total_hisp, total_pop, pct_hispanic) %>% 
+  mutate("year" = "2014") %>% 
+  distinct()
+
+cvap_clark_2013 <- cvap_get("NV", year = 2013, geography = "county") %>%  
+  clean_names() %>%    
+  filter(geoid == 32003) %>% 
+  mutate(total_hisp = sum(cvap_hisp)) %>% 
+  mutate(total_pop = sum(cvap)) %>% 
+  mutate(pct_hispanic = total_hisp/total_pop) %>% 
+  select(total_hisp, total_pop, pct_hispanic) %>% 
+  mutate("year" = "2013") %>% 
+  distinct()
+
+cvap_clark_2012 <- cvap_get("NV", year = 2012, geography = "county") %>%  
+  clean_names() %>%    
+  filter(geoid == 32003) %>% 
+  mutate(total_hisp = sum(cvap_hisp)) %>% 
+  mutate(total_pop = sum(cvap)) %>% 
+  mutate(pct_hispanic = total_hisp/total_pop) %>% 
+  select(total_hisp, total_pop, pct_hispanic) %>% 
+  mutate("year" = "2012") %>% 
+  distinct()
+
+cvap_clark_2011 <- cvap_get("NV", year = 2011, geography = "county") %>%  
+  clean_names() %>%    
+  filter(geoid == 32003) %>% 
+  mutate(total_hisp = sum(cvap_hisp)) %>% 
+  mutate(total_pop = sum(cvap)) %>% 
+  mutate(pct_hispanic = total_hisp/total_pop) %>% 
+  select(total_hisp, total_pop, pct_hispanic) %>% 
+  mutate("year" = "2011") %>% 
+  distinct()
+
+cvap_clark_2010 <- cvap_get("NV", year = 2010, geography = "county") %>%  
+  clean_names() %>%    
+  filter(geoid == 32003) %>% 
+  mutate(total_hisp = sum(cvap_hisp)) %>% 
+  mutate(total_pop = sum(cvap)) %>% 
+  mutate(pct_hispanic = total_hisp/total_pop) %>% 
+  select(total_hisp, total_pop, pct_hispanic) %>% 
+  mutate("year" = "2010") %>% 
+  distinct()
+
+cvap_clark_2009 <- cvap_get("NV", year = 2009, geography = "county") %>%  
+  clean_names() %>%    
+  filter(geoid == 32003) %>% 
+  mutate(total_hisp = sum(cvap_hisp)) %>% 
+  mutate(total_pop = sum(cvap)) %>% 
+  mutate(pct_hispanic = total_hisp/total_pop) %>% 
+  select(total_hisp, total_pop, pct_hispanic) %>% 
+  mutate("year" = "2009") %>% 
+  distinct()
+
+hispanic_population_2009_2022_clark <- rbind(cvap_clark_2009, cvap_clark_2010, cvap_clark_2011, cvap_clark_2012, cvap_clark_2013, cvap_clark_2014, cvap_clark_2015, cvap_clark_2016, cvap_clark_2017, cvap_clark_2018, cvap_clark_2019, cvap_clark_2020, cvap_clark_2021, cvap_clark_2022)
+
+hispanic_population_2009_2022_clark <- hispanic_population_2009_2022_clark %>% 
+  rename("pct_hispanic_clark" = "pct_hispanic")
+
+write_csv(hispanic_population_2009_2022_clark, "~/Documents/Indy/Hispanic Voting Demographics New Datasets/hispanic_population_2009_2022_clark.csv")
+
+
+
+```
+
+
+WASHOE COUNTY
+
+```{r}
+
+# This block will focus on the percentage of voting-age Hispanics across Washoe County
+
+cvap_washoe_2022 <- cvap_get("NV", year = 2022, geography = "county") %>% 
+  clean_names() %>% 
+  filter(geoid == 32031) %>% 
+  mutate(total_hisp = sum(cvap_hisp)) %>% 
+  mutate(total_pop = sum(cvap)) %>% 
+  mutate(pct_hispanic = total_hisp/total_pop) %>% 
+  select(total_hisp, total_pop, pct_hispanic) %>% 
+  mutate("year" = "2022") %>% 
+  distinct()
+
+cvap_washoe_2021 <- cvap_get("NV", year = 2021, geography = "county") %>%    clean_names() %>%    filter(geoid == 32031) %>% 
+  mutate(total_hisp = sum(cvap_hisp)) %>% 
+  mutate(total_pop = sum(cvap)) %>% 
+  mutate(pct_hispanic = total_hisp/total_pop) %>% 
+  select(total_hisp, total_pop, pct_hispanic) %>% 
+  mutate("year" = "2021") %>% 
+  distinct()
+
+cvap_washoe_2020 <- cvap_get("NV", year = 2020, geography = "county") %>%  
+  clean_names() %>%   
+  filter(geoid == 32031) %>% 
+  mutate(total_hisp = sum(cvap_hisp)) %>% 
+  mutate(total_pop = sum(cvap)) %>% 
+  mutate(pct_hispanic = total_hisp/total_pop) %>% 
+  select(total_hisp, total_pop, pct_hispanic) %>% 
+  mutate("year" = "2020") %>% 
+  distinct()
+
+cvap_washoe_2019 <- cvap_get("NV", year = 2019, geography = "county") %>%  
+  clean_names() %>%    
+  filter(geoid == 32031) %>% 
+  mutate(total_hisp = sum(cvap_hisp)) %>% 
+  mutate(total_pop = sum(cvap)) %>% 
+  mutate(pct_hispanic = total_hisp/total_pop) %>% 
+  select(total_hisp, total_pop, pct_hispanic) %>% 
+  mutate("year" = "2019") %>% 
+  distinct()
+
+cvap_washoe_2018 <- cvap_get("NV", year = 2018, geography = "county") %>%  
+  clean_names() %>%    
+  filter(geoid == 32031) %>%  
+  mutate(total_hisp = sum(cvap_hisp)) %>% 
+  mutate(total_pop = sum(cvap)) %>% 
+  mutate(pct_hispanic = total_hisp/total_pop) %>% 
+  select(total_hisp, total_pop, pct_hispanic) %>% 
+  mutate("year" = "2018") %>% 
+  distinct()
+
+cvap_washoe_2017 <- cvap_get("NV", year = 2017, geography = "county") %>%  
+  clean_names() %>%    
+  filter(geoid == 32031) %>% 
+  mutate(total_hisp = sum(cvap_hisp)) %>% 
+  mutate(total_pop = sum(cvap)) %>% 
+  mutate(pct_hispanic = total_hisp/total_pop) %>% 
+  select(total_hisp, total_pop, pct_hispanic) %>% 
+  mutate("year" = "2017") %>% 
+  distinct()
+
+cvap_washoe_2016 <- cvap_get("NV", year = 2016, geography = "county") %>%  
+  clean_names() %>%    
+  filter(geoid == 32031) %>% 
+  mutate(total_hisp = sum(cvap_hisp)) %>% 
+  mutate(total_pop = sum(cvap)) %>% 
+  mutate(pct_hispanic = total_hisp/total_pop) %>% 
+  select(total_hisp, total_pop, pct_hispanic) %>% 
+  mutate("year" = "2016") %>% 
+  distinct()
+
+cvap_washoe_2015 <- cvap_get("NV", year = 2015, geography = "county") %>%  
+  clean_names() %>%    
+  filter(geoid == 32031) %>% 
+  mutate(total_hisp = sum(cvap_hisp)) %>% 
+  mutate(total_pop = sum(cvap)) %>% 
+  mutate(pct_hispanic = total_hisp/total_pop) %>% 
+  select(total_hisp, total_pop, pct_hispanic) %>% 
+  mutate("year" = "2015") %>% 
+  distinct()
+
+cvap_washoe_2014 <- cvap_get("NV", year = 2014, geography = "county") %>%  
+  clean_names() %>%    
+  filter(geoid == 32031) %>% 
+  mutate(total_hisp = sum(cvap_hisp)) %>% 
+  mutate(total_pop = sum(cvap)) %>% 
+  mutate(pct_hispanic = total_hisp/total_pop) %>% 
+  select(total_hisp, total_pop, pct_hispanic) %>% 
+  mutate("year" = "2014") %>% 
+  distinct()
+
+cvap_washoe_2013 <- cvap_get("NV", year = 2013, geography = "county") %>%  
+  clean_names() %>%    
+  filter(geoid == 32031) %>% 
+  mutate(total_hisp = sum(cvap_hisp)) %>% 
+  mutate(total_pop = sum(cvap)) %>% 
+  mutate(pct_hispanic = total_hisp/total_pop) %>% 
+  select(total_hisp, total_pop, pct_hispanic) %>% 
+  mutate("year" = "2013") %>% 
+  distinct()
+
+cvap_washoe_2012 <- cvap_get("NV", year = 2012, geography = "county") %>%  
+  clean_names() %>%    
+  filter(geoid == 32031) %>% 
+  mutate(total_hisp = sum(cvap_hisp)) %>% 
+  mutate(total_pop = sum(cvap)) %>% 
+  mutate(pct_hispanic = total_hisp/total_pop) %>% 
+  select(total_hisp, total_pop, pct_hispanic) %>% 
+  mutate("year" = "2012") %>% 
+  distinct()
+
+cvap_washoe_2011 <- cvap_get("NV", year = 2011, geography = "county") %>%  
+  clean_names() %>%    
+  filter(geoid == 32031) %>% 
+  mutate(total_hisp = sum(cvap_hisp)) %>% 
+  mutate(total_pop = sum(cvap)) %>% 
+  mutate(pct_hispanic = total_hisp/total_pop) %>% 
+  select(total_hisp, total_pop, pct_hispanic) %>% 
+  mutate("year" = "2011") %>% 
+  distinct()
+
+cvap_washoe_2010 <- cvap_get("NV", year = 2010, geography = "county") %>%  
+  clean_names() %>%    
+  filter(geoid == 32031) %>% 
+  mutate(total_hisp = sum(cvap_hisp)) %>% 
+  mutate(total_pop = sum(cvap)) %>% 
+  mutate(pct_hispanic = total_hisp/total_pop) %>% 
+  select(total_hisp, total_pop, pct_hispanic) %>% 
+  mutate("year" = "2010") %>% 
+  distinct()
+
+cvap_washoe_2009 <- cvap_get("NV", year = 2009, geography = "county") %>%  
+  clean_names() %>%    
+  filter(geoid == 32031) %>% 
+  mutate(total_hisp = sum(cvap_hisp)) %>% 
+  mutate(total_pop = sum(cvap)) %>% 
+  mutate(pct_hispanic = total_hisp/total_pop) %>% 
+  select(total_hisp, total_pop, pct_hispanic) %>% 
+  mutate("year" = "2009") %>% 
+  distinct()
+
+hispanic_population_2009_2022_washoe <- rbind(cvap_washoe_2009, cvap_washoe_2010, cvap_washoe_2011, cvap_washoe_2012, cvap_washoe_2013, cvap_washoe_2014, cvap_washoe_2015, cvap_washoe_2016, cvap_washoe_2017, cvap_washoe_2018, cvap_washoe_2019, cvap_washoe_2020, cvap_washoe_2021, cvap_washoe_2022)
+
+hispanic_population_2009_2022_washoe <- hispanic_population_2009_2022_washoe %>% 
+  rename("pct_hispanic_washoe" = "pct_hispanic")
+
+write_csv(hispanic_population_2009_2022_washoe, "~/Documents/Indy/Hispanic Voting Demographics New Datasets/hispanic_population_2009_2022_washoe.csv")
+
+
+
+```
+
+
+NATION
+
+```{r}
+
+# This block will focus on the percentage of voting-age Hispanics across the country
+
+cvap_nation_2022 <- cvap_get("nation", year = 2022) %>% 
+  mutate(total_hisp = sum(cvap_hisp)) %>% 
+  mutate(total_pop = sum(cvap)) %>% 
+  mutate(pct_hispanic = total_hisp/total_pop) %>% 
+  select(total_hisp, total_pop, pct_hispanic) %>% 
+  mutate("year" = "2022") %>% 
+  distinct()
+
+cvap_nation_2021 <- cvap_get("nation", year = 2021) %>% 
+  mutate(total_hisp = sum(cvap_hisp)) %>% 
+  mutate(total_pop = sum(cvap)) %>% 
+  mutate(pct_hispanic = total_hisp/total_pop) %>% 
+  select(total_hisp, total_pop, pct_hispanic) %>% 
+  mutate("year" = "2021") %>% 
+  distinct()
+
+cvap_nation_2020 <- cvap_get("nation", year = 2020) %>% 
+  mutate(total_hisp = sum(cvap_hisp)) %>% 
+  mutate(total_pop = sum(cvap)) %>% 
+  mutate(pct_hispanic = total_hisp/total_pop) %>% 
+  select(total_hisp, total_pop, pct_hispanic) %>% 
+  mutate("year" = "2020") %>% 
+  distinct()
+
+cvap_nation_2019 <- cvap_get("nation", year = 2019) %>% 
+  mutate(total_hisp = sum(cvap_hisp)) %>% 
+  mutate(total_pop = sum(cvap)) %>% 
+  mutate(pct_hispanic = total_hisp/total_pop) %>% 
+  select(total_hisp, total_pop, pct_hispanic) %>% 
+  mutate("year" = "2019") %>% 
+  distinct()
+
+cvap_nation_2018 <- cvap_get("nation", year = 2018) %>% 
+  mutate(total_hisp = sum(cvap_hisp)) %>% 
+  mutate(total_pop = sum(cvap)) %>% 
+  mutate(pct_hispanic = total_hisp/total_pop) %>% 
+  select(total_hisp, total_pop, pct_hispanic) %>% 
+  mutate("year" = "2018") %>% 
+  distinct()
+
+cvap_nation_2017 <- cvap_get("nation", year = 2017) %>% 
+  mutate(total_hisp = sum(cvap_hisp)) %>% 
+  mutate(total_pop = sum(cvap)) %>% 
+  mutate(pct_hispanic = total_hisp/total_pop) %>% 
+  select(total_hisp, total_pop, pct_hispanic) %>% 
+  mutate("year" = "2017") %>% 
+  distinct()
+
+cvap_nation_2016 <- cvap_get("nation", year = 2016) %>% 
+  mutate(total_hisp = sum(cvap_hisp)) %>% 
+  mutate(total_pop = sum(cvap)) %>% 
+  mutate(pct_hispanic = total_hisp/total_pop) %>% 
+  select(total_hisp, total_pop, pct_hispanic) %>% 
+  mutate("year" = "2016") %>% 
+  distinct()
+
+cvap_nation_2015 <- cvap_get("nation", year = 2015) %>% 
+  mutate(total_hisp = sum(cvap_hisp)) %>% 
+  mutate(total_pop = sum(cvap)) %>% 
+  mutate(pct_hispanic = total_hisp/total_pop) %>% 
+  select(total_hisp, total_pop, pct_hispanic) %>% 
+  mutate("year" = "2015") %>% 
+  distinct()
+
+cvap_nation_2014 <- cvap_get("nation", year = 2014) %>% 
+  mutate(total_hisp = sum(cvap_hisp)) %>% 
+  mutate(total_pop = sum(cvap)) %>% 
+  mutate(pct_hispanic = total_hisp/total_pop) %>% 
+  select(total_hisp, total_pop, pct_hispanic) %>% 
+  mutate("year" = "2014") %>% 
+  distinct()
+
+cvap_nation_2013 <- cvap_get("nation", year = 2013) %>% 
+  mutate(total_hisp = sum(cvap_hisp)) %>% 
+  mutate(total_pop = sum(cvap)) %>% 
+  mutate(pct_hispanic = total_hisp/total_pop) %>% 
+  select(total_hisp, total_pop, pct_hispanic) %>% 
+  mutate("year" = "2013") %>% 
+  distinct()
+
+cvap_nation_2012 <- cvap_get("nation", year = 2012) %>% 
+  mutate(total_hisp = sum(cvap_hisp)) %>% 
+  mutate(total_pop = sum(cvap)) %>% 
+  mutate(pct_hispanic = total_hisp/total_pop) %>% 
+  select(total_hisp, total_pop, pct_hispanic) %>% 
+  mutate("year" = "2012") %>% 
+  distinct()
+
+cvap_nation_2011 <- cvap_get("nation", year = 2011) %>% 
+  mutate(total_hisp = sum(cvap_hisp)) %>% 
+  mutate(total_pop = sum(cvap)) %>% 
+  mutate(pct_hispanic = total_hisp/total_pop) %>% 
+  select(total_hisp, total_pop, pct_hispanic) %>% 
+  mutate("year" = "2011") %>% 
+  distinct()
+
+cvap_nation_2010 <- cvap_get("nation", year = 2010) %>% 
+  mutate(total_hisp = sum(cvap_hisp)) %>% 
+  mutate(total_pop = sum(cvap)) %>% 
+  mutate(pct_hispanic = total_hisp/total_pop) %>% 
+  select(total_hisp, total_pop, pct_hispanic) %>% 
+  mutate("year" = "2010") %>% 
+  distinct()
+
+cvap_nation_2009 <- cvap_get("nation", year = 2009) %>% 
+  mutate(total_hisp = sum(cvap_hisp)) %>% 
+  mutate(total_pop = sum(cvap)) %>% 
+  mutate(pct_hispanic = total_hisp/total_pop) %>% 
+  select(total_hisp, total_pop, pct_hispanic) %>% 
+  mutate("year" = "2009") %>% 
+  distinct()
+
+hispanic_population_2009_2022_nation <- rbind(cvap_nation_2009, cvap_nation_2010, cvap_nation_2011, cvap_nation_2012, cvap_nation_2013, cvap_nation_2014, cvap_nation_2015, cvap_nation_2016, cvap_nation_2017, cvap_nation_2018, cvap_nation_2019, cvap_nation_2020, cvap_nation_2021, cvap_nation_2022)
+
+hispanic_population_2009_2022_nation <- hispanic_population_2009_2022_nation %>% 
+  rename("pct_hispanic_nation" = "pct_hispanic")
+
+write_csv(hispanic_population_2009_2022_nation, "~/Documents/Indy/Hispanic Voting Demographics New Datasets/hispanic_population_2009_2022_nation.csv")
+
+
+
+```
+
+Combining Washoe, Clark, state, nation for graphs
+
+```{r}
+
+#This new dataset is combining the above datasets of voting-age Hisoanic population changes in Clark and Washoe Counties, Nevada and the U.S.
+
+
+clark_washoe_state_nation_graphs <- hispanic_population_2009_2022_clark %>% 
+  inner_join(hispanic_population_2009_2022_nation, by = "year") %>% 
+  inner_join(hispanic_population_2009_2022_washoe, by = "year") %>% 
+  inner_join(hispanic_population_2009_2022_statewide_nv, by = "year") %>% 
+  select(year, pct_hispanic_clark, pct_hispanic_washoe, pct_hispanic_nation, pct_hispanic_statewide)
+
+write_csv(clark_washoe_state_nation_graphs, "~/Documents/Indy/Hispanic Voting Demographics New Datasets/clark_washoe_state_nation_graphs.csv")
+
+
+
+```
+
+
+Comparing to Other States, 2009 + 2022
+
+```{r}
+
+#Now, I am importing a dataset of Citizen Voting-Age Population Data from 2009 and 2022 across all states to compare Nevada's Hispanic population changes to other states.
+
+#2009:
+
+
+
+
+cvap_2009_all_states <- read_csv("cvap_2009_all_states.csv") %>% 
+  clean_names() %>% 
+  filter(lntitle == "Total" | lntitle == "Hispanic or Latino") %>% 
+  rename("state" = "geoname") %>% 
+  select(state, lntitle, cvap_est) %>% 
+  pivot_wider(names_from = lntitle, values_from = cvap_est) %>% 
+  clean_names() %>% 
+  rename("total_2009" = "total") %>% 
+  rename("hispanic_2009" = "hispanic_or_latino") %>% 
+  mutate(pct_hispanic_2009 = (hispanic_2009 / total_2009)*100)
+
+#2022
+
+cvap_2022_all_states <- read_csv("cvap_2022_all_states.csv") %>% 
+  clean_names() %>% 
+  filter(lntitle == "Total" | lntitle == "Hispanic or Latino") %>% 
+  rename("state" = "geoname") %>% 
+  select(state, lntitle, cvap_est) %>% 
+  pivot_wider(names_from = lntitle, values_from = cvap_est) %>% 
+  clean_names() %>% 
+  rename("total_2022" = "total") %>% 
+  rename("hispanic_2022" = "hispanic_or_latino") %>% 
+  mutate(pct_hispanic_2022 = (hispanic_2022 / total_2022)*100)
+
+#I am now combining the above datasets and filtering to only include swing states, so I can better understand the power of the Latino vote in other swing states.
+
+hispanic_pop_changes_2009_2022_swing_states <- cvap_2009_all_states %>% 
+  inner_join(cvap_2022_all_states, by = "state") %>% 
+  mutate(hispanic_pop_change = hispanic_2022 - hispanic_2009) %>% 
+  mutate(hispanic_pct_change = 100*(hispanic_2022 - hispanic_2009)/hispanic_2009) %>% 
+  select(state, hispanic_pop_change, hispanic_pct_change, pct_hispanic_2022) %>% 
+  filter(state == "Wisconsin" | state == "Michigan" | state == "Pennsylvania" | state == "Nevada" | state == "Arizona" | state == "Georgia" | state == "North Carolina") %>% 
+  select(state, hispanic_pct_change, pct_hispanic_2022)
+
+write_csv(hispanic_pop_changes_2009_2022_swing_states, "~/Documents/Indy/Hispanic Voting Demographics New Datasets/hispanic_pop_changes_2009_2022_swing_states.csv")
+
+```
+
+Comparing to other Counties, 2009 to 2022
+
+
+```{r}
+
+#Now, I am importing a dataset of Citizen Voting-Age Population Data from 2009 and 2022 across all American counties to compare Clark and Washoe Counties' Hispanic population changes to other counties
+
+
+#2009:
+
+cvap_2009_all_counties <- read_csv("cvap_2009_all_counties.csv") %>% 
+  clean_names() %>% 
+  filter(lntitle == "Total" | lntitle == "Hispanic or Latino") %>% 
+  rename("county" = "geoname") %>% 
+  select(county, lntitle, cvap_est) %>% 
+  pivot_wider(names_from = lntitle, values_from = cvap_est) %>% 
+  clean_names() %>% 
+  rename("total_2009" = "total") %>% 
+  rename("hispanic_2009" = "hispanic_or_latino") %>% 
+  mutate(pct_hispanic_2009 = (hispanic_2009 / total_2009)*100)
+
+#2022
+
+cvap_2022_all_counties <- read_csv("cvap_2022_all_counties.csv") %>% 
+  clean_names() %>% 
+  filter(lntitle == "Total" | lntitle == "Hispanic or Latino") %>% 
+  rename("county" = "geoname") %>% 
+  select(county, lntitle, cvap_est) %>% 
+  pivot_wider(names_from = lntitle, values_from = cvap_est) %>% 
+  clean_names() %>% 
+  rename("total_2022" = "total") %>% 
+  rename("hispanic_2022" = "hispanic_or_latino") %>% 
+  mutate(pct_hispanic_2022 = (hispanic_2022 / total_2022)*100)
+
+#I am combining these datasets and then filtering to the 10 most populous counties in swing states to better understand Hispanic population growth at the most important counties in the 2024 election
+
+hispanic_pop_changes_2009_2022_swing_state_counties <- cvap_2009_all_counties %>% 
+  inner_join(cvap_2022_all_counties, by = "county") %>% 
+  mutate(hispanic_pop_change = hispanic_2022 - hispanic_2009) %>% 
+  mutate(hispanic_pct_change = 100*(hispanic_2022 - hispanic_2009)/hispanic_2009) %>%
+  separate(county, into = c("county", "state"), sep = ", ") %>% 
+  filter(state == "Wisconsin" | state == "Michigan" | state == "Pennsylvania" | state == "Nevada" | state == "Arizona" | state == "Georgia" | state == "North Carolina") %>% 
+  select(county, state, hispanic_2022, pct_hispanic_2022, total_2022, hispanic_pct_change) %>% 
+  arrange(desc(total_2022)) %>% 
+  head(10) %>% 
+  unite("county", county, state, sep = ", ") %>% 
+  select(county, hispanic_pct_change, pct_hispanic_2022) %>% 
+  arrange(desc(hispanic_pct_change))
+
+write_csv(hispanic_pop_changes_2009_2022_swing_state_counties, "~/Documents/Indy/Hispanic Voting Demographics New Datasets/hispanic_pop_changes_2009_2022_swing_state_counties.csv")
+
+
+```
+
+Changes by Tract
+
+```{r}
+
+#Below, I am importing and cleaning Citizen Voting-Age Population Data at the Census Tract level to better understand Hispanic population changes at a more local level in the Las Vegas Valley
+
+
+#2010 Census Tract
+
+cvap_2010_tract <- read_csv("cvap_2010_tract.csv")
+
+cvap_2010_tract <- cvap_2010_tract %>% 
+  clean_names() %>% 
+  filter(lntitle == "Total" | lntitle == "Hispanic or Latino")
+
+cvap_2010_tract <- subset(cvap_2010_tract, grepl("14000US32", geoid, ignore.case = TRUE))
+
+cvap_2010_tract <- subset(cvap_2010_tract, grepl("Clark County", geoname, ignore.case = TRUE))
+
+cvap_2010_tract <- cvap_2010_tract %>% 
+  select(geoname, geoid, lntitle, cvap_est) %>% 
+  pivot_wider(names_from = lntitle, values_from = cvap_est) %>% 
+  clean_names() %>% 
+  rename("total_2010" = "total") %>% 
+  rename("hisp_2010" = "hispanic_or_latino") %>% 
+  mutate(pct_hispanic_2010 = 100*(hisp_2010 / total_2010))
+
+cvap_2010_tract$geoid <- substr(cvap_2010_tract$geoid, 8, nchar(cvap_2010_tract$geoid))
+
+#2022 Census Tracts
+
+cvap_2022_tract <- read_csv("cvap_2022_tract.csv")
+
+cvap_2022_tract <- cvap_2022_tract %>% 
+  clean_names() %>% 
+  filter(lntitle == "Total" | lntitle == "Hispanic or Latino")
+
+cvap_2022_tract <- subset(cvap_2022_tract, grepl("1400000US32", geoid, ignore.case = TRUE))
+
+cvap_2022_tract <- subset(cvap_2022_tract, grepl("Clark County", geoname, ignore.case = TRUE))
+
+cvap_2022_tract <- cvap_2022_tract %>% 
+  select(geoname, geoid, lntitle, cvap_est) %>% 
+  pivot_wider(names_from = lntitle, values_from = cvap_est) %>% 
+  clean_names() %>% 
+  rename("total_2022" = "total") %>% 
+  rename("hisp_2022" = "hispanic_or_latino") %>% 
+  mutate(pct_hispanic_2022 = 100*(hisp_2022 / total_2022))
+
+cvap_2022_tract$geoid <- substr(cvap_2022_tract$geoid, 10, nchar(cvap_2022_tract$geoid))
+
+
+
+  
+```
+
+Importing Shapefiles of Census Tracts for Data Visualizations
+
+```{r}
+
+#Below, I am using the get_acs function to obtain the shapefiles of Census tracts from 2010 and 2020, which will be used to generate maps of Census tracts in the Las Vegas Valley, and how their Hispanic population changed rom 2010 and 2022 (which uses the 2020 shapefiles)
+
+
+#2020
+
+nv_shapefiles_2020_tract <- get_acs(
+  geography = "tract", 
+  variables = "B19013_001",
+  state = "NV", 
+  county = "Clark",
+  year = 2020,
+  geometry = TRUE
+)
+
+cvap_data_with_shapefiles_2020_tract <- nv_shapefiles_2020_tract %>% 
+  clean_names() %>% 
+  inner_join(cvap_2022_tract, by = "geoid") %>% 
+  separate(name, into = c("name", "county", "state"), sep = ", ") %>% 
+  select(name, geoid, geometry, pct_hispanic_2022)
+
+cvap_data_with_shapefiles_2020_tract <- st_as_sf(cvap_data_with_shapefiles_2020_tract)
+
+write_csv(cvap_data_with_shapefiles_2020_tract, "~/Documents/Indy/Hispanic Voting Demographics New Datasets/cvap_data_with_shapefiles_2020_tract.csv")
+
+
+st_write(cvap_data_with_shapefiles_2020_tract, "~/Documents/Indy/Hispanic Voting Demographics New Datasets/cvap_data_with_shapefiles_2020_tract.shp")
+
+
+#2010
+
+nv_shapefiles_2010_tract <- get_acs(
+  geography = "tract", 
+  variables = "B19013_001",
+  state = "NV", 
+  county = "Clark",
+  year = 2010,
+  geometry = TRUE
+)
+
+cvap_data_with_shapefiles_2010_tract <- nv_shapefiles_2010_tract %>% 
+  clean_names() %>% 
+  inner_join(cvap_2010_tract, by = "geoid") %>% 
+  separate(name, into = c("name", "county", "state"), sep = ", ") %>% 
+  select(name, geoid, geometry, pct_hispanic_2010)
+
+cvap_data_with_shapefiles_2010_tract <- st_as_sf(cvap_data_with_shapefiles_2010_tract)
+
+write_csv(cvap_data_with_shapefiles_2010_tract, "~/Documents/Indy/Hispanic Voting Demographics New Datasets/cvap_data_with_shapefiles_2010_tract.csv")
+
+
+st_write(cvap_data_with_shapefiles_2010_tract, "~/Documents/Indy/Hispanic Voting Demographics New Datasets/cvap_data_with_shapefiles_2010_tract.shp")
+```
+
+Current Population Survey Data
+
+
+```{r}
+
+#Now, I am moving to a different Census dataset: The Current Population Survey, which every election year conducts a post-election survey of voting behaviors. This will allow me to compare voting behaviors by race and ethnicity for every presidential election since 2008. The imported datasets are only for Nevada recipients.
+
+nv_cps_2008_2022_master_doc <- read_csv("cps_2008_2022.csv") %>% 
+  clean_names() %>% 
+  filter(year == 2008 | year == 2012 | year == 2016 | year == 2020) %>% 
+  mutate(voted = case_when(
+    voted == "1" ~ "Did not vote",
+    voted == "2" ~ "Voted",
+    voted == "96" ~ "Refused",
+    voted == "97" ~ "Don't Know",
+    voted == "98" ~ "No Response",
+    voted == "99" ~ "Not in universe")) %>% 
+  mutate(voreg = case_when(
+    voreg == "1" ~ "Did not register",
+    voreg == "2" ~ "Registered",
+    voreg == "96" ~ "Refused",
+    voreg == "97" ~ "Don't Know",
+    voreg == "98" ~ "Not reported / Not available",
+    voted == "Voted" ~ "Registered",
+    voreg == "99" ~ "Not in universe")) %>% 
+  mutate(hispan = case_when(
+    hispan == "0" ~ "Not Hispanic",
+    hispan != "0" ~ "Hispanic")) %>% 
+  mutate(race = case_when(
+    race == "100" ~ "White",
+    race == "200" ~ "Black",
+    race == "651" ~ "Asian")) %>% 
+  select(year, race, hispan, voted, voreg, voynotreg, vowhynot) %>% 
+  rename("why_not_reg" = "voynotreg") %>% 
+  rename("why_not_vote_after_registering" = "vowhynot")
+
+#Next, I am creating new datasets depending on the respondent's race or ethnicity.
+
+hispanic_only_cps_2008_2022 <- nv_cps_2008_2022_master_doc %>% 
+  filter(hispan == "Hispanic")
+
+black_only_cps_2008_2022 <- nv_cps_2008_2022_master_doc %>% 
+  filter(race == "Black")
+
+white_only_cps_2008_2022 <- nv_cps_2008_2022_master_doc %>% 
+  filter(race == "White")
+
+aapi_only_cps_2008_2022 <- nv_cps_2008_2022_master_doc %>% 
+  filter(race == "Asian")
+
+
+
+```
+
+
+Reg Data by Race
+
+```{r}
+
+# First, I want to answer the question: Among eligible voters, how many voters registered, separated by year and race?
+
+black_reg_rates_by_year <- nv_cps_2008_2022_master_doc %>% 
+  filter(voreg != "Not in universe") %>% 
+  filter(race == "Black") %>% 
+  group_by(year, voreg) %>%
+  summarise(count = n()) %>%
+  mutate(total = sum(count),
+         percentage = (count / total) * 100) %>%
+  select(year, voreg, percentage) %>%
+  pivot_wider(names_from = voreg, values_from = percentage, values_fill = 0) %>% 
+  clean_names() %>% 
+  select(year, registered) %>% 
+  rename("black_reg_rate" = "registered")
+
+
+white_reg_rates_by_year <- nv_cps_2008_2022_master_doc %>% 
+  filter(voreg != "Not in universe") %>% 
+  filter(race == "White") %>% 
+  group_by(year, voreg) %>%
+  summarise(count = n()) %>%
+  mutate(total = sum(count),
+         percentage = (count / total) * 100) %>%
+  select(year, voreg, percentage) %>%
+  pivot_wider(names_from = voreg, values_from = percentage, values_fill = 0) %>% 
+  clean_names() %>% 
+  select(year, registered) %>% 
+  rename("white_reg_rate" = "registered")
+
+asian_reg_rates_by_year <- nv_cps_2008_2022_master_doc %>% 
+  filter(voreg != "Not in universe") %>% 
+  filter(race == "Asian") %>% 
+  group_by(year, voreg) %>%
+  summarise(count = n()) %>%
+  mutate(total = sum(count),
+         percentage = (count / total) * 100) %>%
+  select(year, voreg, percentage) %>%
+  pivot_wider(names_from = voreg, values_from = percentage, values_fill = 0) %>% 
+  clean_names() %>% 
+  select(year, registered) %>% 
+  rename("asian_reg_rate" = "registered")
+
+hispanic_reg_rates_by_year <- nv_cps_2008_2022_master_doc %>% 
+  filter(voreg != "Not in universe") %>% 
+  filter(hispan == "Hispanic") %>% 
+  group_by(year, voreg) %>%
+  summarise(count = n()) %>%
+  mutate(total = sum(count),
+         percentage = (count / total) * 100) %>%
+  select(year, voreg, percentage) %>%
+  pivot_wider(names_from = voreg, values_from = percentage, values_fill = 0) %>% 
+  clean_names() %>% 
+  select(year, registered) %>% 
+  rename("hispanic_reg_rate" = "registered")
+
+#Below is the combined dataset of the above, allowing me to see how Nevada registration rates differed by race and ethnicity
+
+reg_rates_eligible_voters_by_year_combined <- hispanic_reg_rates_by_year %>% 
+  inner_join(black_reg_rates_by_year, by = "year") %>% 
+  inner_join(asian_reg_rates_by_year, by = "year") %>% 
+  inner_join(white_reg_rates_by_year, by = "year")
+
+write_csv(reg_rates_eligible_voters_by_year_combined, "~/Documents/Indy/Hispanic Data CPS/reg_rates_eligible_voters_by_year_combined.csv")
+
+
+```
+
+Voting Data by Race
+
+```{r}
+
+# Second, I want to answer the question: Among eligible voters, how many voters voted, separated by year and race?
+
+black_vote_rates_by_year <- nv_cps_2008_2022_master_doc %>% 
+  filter(voted != "Not in universe") %>% 
+  filter(race == "Black") %>% 
+  group_by(year, voted) %>%
+  summarise(count = n()) %>%
+  mutate(total = sum(count),
+         percentage = (count / total) * 100) %>%
+  select(year, voted, percentage) %>%
+  pivot_wider(names_from = voted, values_from = percentage, values_fill = 0) %>% 
+  clean_names() %>% 
+  select(year, voted) %>% 
+  rename("black_vote_rate" = "voted")
+
+
+white_vote_rates_by_year <- nv_cps_2008_2022_master_doc %>% 
+  filter(voted != "Not in universe") %>% 
+  filter(race == "White") %>% 
+  group_by(year, voted) %>%
+  summarise(count = n()) %>%
+  mutate(total = sum(count),
+         percentage = (count / total) * 100) %>%
+  select(year, voted, percentage) %>%
+  pivot_wider(names_from = voted, values_from = percentage, values_fill = 0) %>% 
+  clean_names() %>% 
+  select(year, voted) %>% 
+  rename("white_vote_rate" = "voted")
+
+asian_vote_rates_by_year <- nv_cps_2008_2022_master_doc %>% 
+  filter(voted != "Not in universe") %>% 
+  filter(race == "Asian") %>% 
+  group_by(year, voted) %>%
+  summarise(count = n()) %>%
+  mutate(total = sum(count),
+         percentage = (count / total) * 100) %>%
+  select(year, voted, percentage) %>%
+  pivot_wider(names_from = voted, values_from = percentage, values_fill = 0) %>% 
+  clean_names() %>% 
+  select(year, voted) %>% 
+  rename("asian_vote_rate" = "voted")
+
+hispanic_vote_rates_by_year <- nv_cps_2008_2022_master_doc %>% 
+  filter(voted != "Not in universe") %>% 
+  filter(hispan == "Hispanic") %>% 
+  group_by(year, voted) %>%
+  summarise(count = n()) %>%
+  mutate(total = sum(count),
+         percentage = (count / total) * 100) %>%
+  select(year, voted, percentage) %>%
+  pivot_wider(names_from = voted, values_from = percentage, values_fill = 0) %>% 
+  clean_names() %>% 
+  select(year, voted) %>% 
+  rename("hispanic_vote_rate" = "voted")
+
+#Below is the combined dataset of the above, allowing me to see how Nevada voting rates differed by race and ethnicity
+
+vote_rates_eligible_voters_by_year_combined <- hispanic_vote_rates_by_year %>% 
+  inner_join(black_vote_rates_by_year, by = "year") %>% 
+  inner_join(asian_vote_rates_by_year, by = "year") %>% 
+  inner_join(white_vote_rates_by_year, by = "year")
+
+write_csv(vote_rates_eligible_voters_by_year_combined, "~/Documents/Indy/Hispanic Data CPS/vote_rates_eligible_voters_by_year_combined.csv")
+
+
+```
+
+Voting and Registration Rates, All Years Combined
+
+```{r}
+
+#Finally, I am creating a new dataframe combining the Current Population Surveys following the last four presidential elections to see the overall voting and registration rate by race and ethnicity
+
+total_reg_rates_years_combined <- nv_cps_2008_2022_master_doc %>% 
+  filter(voreg != "Not in universe") %>% 
+  filter(race == "Black" | race == "White" | race == "Asian" | hispan == "Hispanic") %>% 
+  mutate(race = case_when(
+    hispan == "Hispanic" ~ "Hispanic",
+    TRUE ~ race)) %>% 
+  group_by(race, voreg) %>% 
+  summarise(count = n()) %>% 
+   mutate(total = sum(count),
+         percentage = (count / total) * 100) %>%
+  select(race, voreg, percentage) %>% 
+  filter(voreg == "Registered")
+
+total_vote_rates_years_combined <- nv_cps_2008_2022_master_doc %>% 
+  filter(voted != "Not in universe") %>% 
+  filter(race == "Black" | race == "White" | race == "Asian" | hispan == "Hispanic") %>% 
+  mutate(race = case_when(
+    hispan == "Hispanic" ~ "Hispanic",
+    TRUE ~ race)) %>% 
+  group_by(race, voted) %>% 
+  summarise(count = n()) %>% 
+   mutate(total = sum(count),
+         percentage = (count / total) * 100) %>%
+  select(race, voted, percentage) %>% 
+  filter(voted == "Voted")
+
+```
